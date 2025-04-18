@@ -9,5 +9,11 @@ const config: Config = {
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'], // Specifies the files to collect coverage from
   collectCoverage: true,                // Enables code coverage collection
   coverageDirectory: 'coverage',        // Specifies the directory to output coverage files
+  coverageThreshold:{
+    global: {
+      functions: 85,
+      statements: 75                  
+    }
+  }
 };
 export default config;
