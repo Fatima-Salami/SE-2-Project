@@ -1,0 +1,6 @@
+OrderID,CustomerName,PhoneNumber,OrderDate,DeliveryDate,CakeType,Size,Quantity,Price,Status,Notes
+1001,Sarah Johnson,555-1234,2025-04-15,2025-04-17,Chocolate,Medium,1,25.00,Confirmed,No nuts
+1002,James Lee,555-5678,2025-04-16,2025-04-18,Vanilla,Large,2,40.00,Pending,Add extra frosting
+1003,Amina Khan,555-9012,2025-04-17,2025-04-19,Red Velvet,Small,1,18.00,Delivered,Include birthday message
+1004,Robert Smith,555-3456,2025-04-18,2025-04-20,Lemon,Medium,3,75.00,Canceled,Customer changed mind
+1005,Emily Chen,555-7890,2025-04-18,2025-04-21,Black Forest,Large,2,50.00,Confirmed,Gluten free base

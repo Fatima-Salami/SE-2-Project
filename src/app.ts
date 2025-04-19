@@ -119,4 +119,3 @@ export class Validator implements IValidator {
       this.rules.forEach(rule => rule.validate(order));
   }
 }
-
