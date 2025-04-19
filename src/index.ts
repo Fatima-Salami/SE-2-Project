@@ -1,10 +1,11 @@
 /*import config from "./config"
 
 const firstName= 'Fatima S';
-console.log("Hello Worlds, this is", firstName);
-console.log("Secret is:", config.secret);*/
+logger.info("Hello Worlds, this is", firstName);
+logger.info("Secret is:", config.secret);*/
 
 import { OrderService, FinanceCalculator, PriceValidator, MaxPriceValidator, ItemValidator, Validator  } from "./app";
+import logger from "./util/logger"; 
 
 const orders = [
     { id: 1, item: "Sponge", price: 15 },
@@ -30,12 +31,12 @@ const orders = [
   const newPrice = 22;
 
   orderService.addOrder(newItem, newPrice);
-  console.log("Orders after adding a new order:", orderService.getOrders());
+  logger.info("Orders after adding a new order: %o", orderService.getOrders());
 
-  console.log("Total Revenue:", orderService.getTotalRevenue());
-  console.log("Average Buy Power:", orderService.getbyAverageBuyPower());
-  console.log("Order of id = 2:", orderService.fetchOrderById(2));
-  console.log("Order of  non-existent id = 10:", orderService.fetchOrderById(10));
+  logger.info("Total Revenue:"+ orderService.getTotalRevenue());
+  logger.info("Average Buy Power:"+ orderService.getbyAverageBuyPower());
+  logger.info("Order of id = 2: %o", orderService.fetchOrderById(2));
+  logger.info("Order of  non-existent id = 10:"+ orderService.fetchOrderById(10));
   
 
  

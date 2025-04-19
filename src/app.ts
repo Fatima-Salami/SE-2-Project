@@ -1,6 +1,4 @@
-
-
-
+import logger from "./util/logger"; 
 
 export interface Order {
   id: number;
@@ -14,7 +12,7 @@ export class OrderService {
   constructor(
     private validator: IValidator,
     private calculator: ICalculator
-  ) {}
+  ) {logger.debug("OrderService initialized");}
 
   addOrder(item: string, price: number): void {
     try{
@@ -30,8 +28,12 @@ export class OrderService {
     return this.orders;
   }
 
-  fetchOrderById(id: number): Order | null {
-    return this.orders.find(order => order.id === id) || null;
+  fetchOrderById(id: number){
+    const order = this.orders.find(order => order.id === id) || null;
+    if(!order){
+      logger.warn(`Order with ID ${id} not found`);
+    }
+    return order;
   }
 
   getTotalRevenue(): number {
@@ -45,7 +47,7 @@ export class OrderService {
 }
 
 /* class PremiumOrderService extends OrderService { //can replace OrderService by PremiumOrderService easily in main
-  fetchOrderById(id: number): Order | null {
+  fetchOrderById(id: number): {
     console.log(`Fetching premium order with ID: ${id}`);
     return super.fetchOrderById(id);
   }
@@ -74,6 +76,7 @@ interface IValidator {
 export class PriceValidator implements IValidator {
   validate(order: Order) {
       if (order.price <= 0) {
+        logger.error(`Price must be greater than zero.`);
           throw new Error("Price must be greater than zero");
       }
   }
@@ -81,6 +84,7 @@ export class PriceValidator implements IValidator {
 export class MaxPriceValidator implements IValidator {
   validate(order:Order) {
       if (order.price > 100) {
+        
           throw new Error("Price must be less than 100");
       }
   }
@@ -100,6 +104,7 @@ export class ItemValidator implements IValidator {
   
   validate(order: Order) {  
       if (!ItemValidator.possibleItems.includes(order.item)) {
+       
           throw new Error(`Invalid item. Must be one of: ${ItemValidator.possibleItems.join(", ")}`);
       }
   }
