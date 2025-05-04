@@ -1,22 +1,46 @@
-import path from 'path';
-import {readCSVFile} from './util/parsers/csvParser'
-import { readJSONFile} from './util/parsers/jsonParser'
-import { readXMLFile} from './util/parsers/xmlParser'
-import logger from './util/logger';
-
-const filePath = path.resolve(__dirname, './data/toy orders.xml');
+import { CakeBuilder } from './model/builders/Cake.builder';
+import { ToyBuilder } from './model/builders/Toy.builder';
+import { BookBuilder } from './model/builders/Book.builder';
 
 async function main() {
-    try {
-        //const products = await readCSVFile(filePath)
-        //const products = await readJSONFile(filePath)
-        const products = await readXMLFile(filePath)
-        products.forEach((product) => {
-            logger.info(product);
-        });
-    } catch(error) {
-        logger.error(error)
-    }
+    const cake = new CakeBuilder().
+        setType('Birthday')
+        .setFlavor('Chocolate')
+        .setFilling('Vanilla')
+        .setSize(2)
+        .setLayers(3)
+        .setFrostingType('Buttercream')
+        .setFrostingFlavor('Vanilla')
+        .setDecorationType('Edible Flowers')
+        .setDecorationColor('Pink')
+        .setCustomMessage('Happy Birthday!')
+        .setShape('Round')
+        .setAllergies('None')
+        .setSpecialIngredients('Organic Cocoa')
+        .setPackagingType('Box').build();
+    console.log(cake);
+
+    const toy = new ToyBuilder().
+        setType('Action Figure')
+        .setMaterial('Plastic')
+        .setAgeGroup('3+')
+        .setBrand('ToyBrand')
+        .setBatteryRequired(false)
+        .setEducational(true)
+        .build();
+    console.log(toy);
+
+    const book = new BookBuilder().
+        setTitle('The Great Book')
+        .setAuthor('John Doe')
+        .setGenre('Fiction')
+        .setFormat('Hardcover')
+        .setLanguage('English')
+        .setPublisher('Great Publishing')
+        .setSpecialEdition('Illustrated Edition')
+        .setPackaging('Standard')
+        .build();
+    console.log(book);
 }
 
 main();
