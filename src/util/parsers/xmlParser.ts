@@ -43,10 +43,31 @@ function deepFlatten(obj: any, parentKey = '', res: any = {}): any {
     return res;
 }
 
+function generateResultAndHeaders(records: any[], includeHeader: boolean): { result: string[][] } {
+
+    // collect all keys for header
+    const allKeys = new Set<string>();
+    records.forEach(row => {
+        Object.keys(deepFlatten(row)).forEach(key => allKeys.add(key));
+    });
+
+    const headers = Array.from(allKeys);
+    const result: string[][] = [];
+    if (includeHeader) {
+        result.push(headers);  // Add the header row if includeHeader is true
+    }
+
+    records.forEach(row => {
+        const flat = deepFlatten(row);
+        result.push(headers.map(key => flat[key] !== undefined ? String(flat[key]) : ''));
+    });
+    
+    return {result };
+}
+
 export async function readXMLFile(filePath: string, includeHeader: boolean = false): Promise<string[][]> {
     try {
         const fileContent = await fs.readFile(filePath, 'utf8');
-
 
         const parser = new XMLParser({
             ignoreAttributes: false,
@@ -67,22 +88,7 @@ export async function readXMLFile(filePath: string, includeHeader: boolean = fal
             throw new Error("Could not find a valid array of records in XML");
         }
 
-        // collect all keys for header
-        const allKeys = new Set<string>();
-        records.forEach(row => {
-            Object.keys(deepFlatten(row)).forEach(key => allKeys.add(key));
-        });
-
-        const headers = Array.from(allKeys);
-        const result: string[][] = [];
-        if (includeHeader) {
-            result.push(headers);  // Add the header row if includeHeader is true
-        }
-
-        records.forEach(row => {
-            const flat = deepFlatten(row);
-            result.push(headers.map(key => flat[key] !== undefined ? String(flat[key]) : ''));
-        });
+        const { result } = generateResultAndHeaders(records, includeHeader);
 
         return result;
 
