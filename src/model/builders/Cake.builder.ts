@@ -1,9 +1,9 @@
 import logger from "../../util/logger";
 import { Cake } from "../Cake.model";
 
-type Type = 'Birthday' | 'Wedding' | 'Anniversary' | 'Graduation' | 'Baby Shower' | 'Other';
+export type Type = 'Birthday' | 'Wedding' | 'Anniversary' | 'Graduation' | 'Baby Shower' | 'Other';
 
-type packType = 'Box' | 'Luxury Box' | 'Luxury Box with Ribbon' | 'Standard Box' | 'Standard Box with Ribbon';
+export type packType = 'Box' | 'Luxury Box' | 'Luxury Box with Ribbon' | 'Standard Box' | 'Standard Box with Ribbon';
 
 export class CakeBuilder {
 
@@ -21,6 +21,11 @@ export class CakeBuilder {
     private allergies!: string;
     private specialIngredients!: string;
     private packagingType!: packType;
+
+    public static newBuilder(): CakeBuilder
+    {
+        return new CakeBuilder();
+    }
 
     setLayers(layers: number): CakeBuilder {
         this.layers = layers;
@@ -107,7 +112,6 @@ export class CakeBuilder {
             this.frostingFlavor,
             this.decorationType,
             this.decorationColor,
-            this.customMessage,
             this.shape,
             this.allergies,
             this.specialIngredients,

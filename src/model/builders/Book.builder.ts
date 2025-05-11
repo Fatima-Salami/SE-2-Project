@@ -12,6 +12,11 @@ export class BookBuilder {
     private specialEdition!: string;
     private packaging!: string;
 
+    public static newBuilder(): BookBuilder
+    {
+        return new BookBuilder();
+    }
+
     setTitle(title: string): BookBuilder {
         this.title = title;
         return this;

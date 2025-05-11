@@ -10,6 +10,11 @@ export class ToyBuilder {
     private batteryRequired!: boolean;
     private educational!: boolean;
 
+    public static newBuilder(): ToyBuilder
+    {
+        return new ToyBuilder();
+    }
+
     setType(type: string): ToyBuilder {
         this.type = type;
         return this;
