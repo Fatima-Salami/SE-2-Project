@@ -23,6 +23,17 @@ function flattenObject(obj: any, parentKey = '', res: any = {}): any {
     return res;
 }
 
+function generateRowsAndHeaders(flattenedRecords: any[]): { headers: string[], rows: string[][] } {
+    // Create headers from all unique keys
+    const headers = Array.from(new Set(flattenedRecords.flatMap(record => Object.keys(record))));
+    // Convert each flattened record into an array that matches the header
+    const rows = flattenedRecords.map(record =>
+        headers.map(header => record[header] !== undefined ? record[header] : '')
+    );
+    return { headers, rows };
+}
+
+
 export async function readJSONFile(filePath: string, includeHeader: boolean = false): Promise<string[][]> {
     try {
         const fileContent = await fs.readFile(filePath, 'utf8');
@@ -33,13 +44,7 @@ export async function readJSONFile(filePath: string, includeHeader: boolean = fa
         // Flatten all records into a flat structure
         const flattenedRecords = records.map(record => flattenObject(record));
 
-        // Create headers from all unique keys
-        const headers = Array.from(new Set(flattenedRecords.flatMap(record => Object.keys(record))));
-
-        // Convert each flattened record into an array that matches the header
-        const rows = flattenedRecords.map(record =>
-            headers.map(header => record[header] !== undefined ? record[header] : '')
-        );
+        const { headers, rows } = generateRowsAndHeaders(flattenedRecords);
 
         // Include header if requested
         if (includeHeader) {
