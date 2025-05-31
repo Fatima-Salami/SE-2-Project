@@ -20,7 +20,7 @@ export class CSVOrderMapper implements IMapper<string[], Order>{
     reverseMap(data: Order): string[] {
         return [
             data.getId(),
-            this.itemMapper.reverseMap(data.getItem()).join(','),
+            ...this.itemMapper.reverseMap(data.getItem()),
             data.getPrice().toString(),
             data.getQuantity().toString(),
         ];

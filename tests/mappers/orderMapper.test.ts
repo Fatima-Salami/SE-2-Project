@@ -16,13 +16,41 @@ describe("CSVOrderMapper", () => {
     beforeEach(() => {
         itemMapperMock = {
             map: jest.fn().mockReturnValue(mockItem),
-            reverseMap: jest.fn().mockReturnValue(['Cake'])
+            reverseMap: jest.fn().mockReturnValue([
+  'Birthday',         
+  'Chocolate',      
+  'Strawberry',       
+  '12',               
+  '2',              
+  'Buttercream',   
+  'Vanilla',          
+  'Flowers',          
+  'Pink',            
+  'Happy Birthday!', 
+  'Round',          
+  'Nuts',            
+  'Gold flakes',     
+  'Luxury Box',      
+])
         };
         csvOrderMapper = new CSVOrderMapper(itemMapperMock);
     });
 
     it("should map valid CSV data to an Order object", () => {
-        const csvData = ["1", "Cake", "10", "2"];
+        const csvData = ["1", "Birthday",         
+      "Chocolate",      
+      "Strawberry",       
+      "12",               
+      "2",              
+      "Buttercream",   
+      "Vanilla",          
+      "Flowers",          
+      "Pink",            
+      "Happy Birthday!", 
+      "Round",          
+      "Nuts",            
+      "Gold flakes",     
+      "Luxury Box",      "10", "2"];
 
         const result = csvOrderMapper.map(csvData);
 
@@ -44,18 +72,57 @@ describe("CSVOrderMapper", () => {
 
         const result = csvOrderMapper.reverseMap(order);
 
-        expect(result).toEqual(["1", "Cake", "10", "2"]);
+        expect(result).toEqual(["1", "Birthday",         
+      "Chocolate",      
+      "Strawberry",       
+      "12",               
+      "2",              
+      "Buttercream",   
+      "Vanilla",          
+      "Flowers",          
+      "Pink",            
+      "Happy Birthday!", 
+      "Round",          
+      "Nuts",            
+      "Gold flakes",     
+      "Luxury Box", "10", "2"]);
         expect(itemMapperMock.reverseMap).toHaveBeenCalledWith(mockItem);
     });
 
     it("should throw an error if CSV data is missing fields", () => {
-        const csvData = ["1", "Cake", "10"]; // Missing quantity
+        const csvData = ["1", "Birthday",         
+      "Chocolate",      
+      "Strawberry",       
+      "12",               
+      "2",              
+      "Buttercream",   
+      "Vanilla",          
+      "Flowers",          
+      "Pink",            
+      "Happy Birthday!", 
+      "Round",          
+      "Nuts",            
+      "Gold flakes",     
+      "Luxury Box", "10"]; // Missing quantity
 
         expect(() => csvOrderMapper.map(csvData)).toThrowError();
     });
 
     it("should throw an error if CSV data contains invalid data types", () => {
-        const csvData = ["1", "Cake", "invalidPrice", "2"]; // Invalid price
+        const csvData = ["1", "Birthday",         
+      "Chocolate",      
+      "Strawberry",       
+      "12",               
+      "2",              
+      "Buttercream",   
+      "Vanilla",          
+      "Flowers",          
+      "Pink",            
+      "Happy Birthday!", 
+      "Round",          
+      "Nuts",            
+      "Gold flakes",     
+      "Luxury Box", "invalidPrice", "2"]; // Invalid price
 
         expect(() => csvOrderMapper.map(csvData)).toThrowError();
     });
