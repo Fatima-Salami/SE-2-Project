@@ -1,22 +1,21 @@
-import path from 'path';
-import {readCSVFile} from './util/parsers/csvParser'
-import { readJSONFile} from './util/parsers/jsonParser'
-import { readXMLFile} from './util/parsers/xmlParser'
-import logger from './util/logger';
-
-const filePath = path.resolve(__dirname, './data/toy orders.xml');
+import { readCSVFile } from './util/parsers/csvParser';
+import { CSVCakeMapper } from './mappers/Cake.mapper';
+import logger from "./util/logger";
+import { CSVOrderMapper } from './mappers/Order.mapper';
 
 async function main() {
-    try {
-        //const products = await readCSVFile(filePath)
-        //const products = await readJSONFile(filePath)
-        const products = await readXMLFile(filePath)
-        products.forEach((product) => {
-            logger.info(product);
-        });
-    } catch(error) {
-        logger.error(error)
-    }
+
+    const cakeData = await readCSVFile("src/data/cake orders.csv", false);
+    const cakeMapper = new CSVCakeMapper();
+    const CakeOrderMapper = new CSVOrderMapper(cakeMapper);
+    const cakeOrders = cakeData.map(row => CakeOrderMapper.map(row));
+
+    logger.info("List of orders: \n %o", cakeOrders)
+
+    const reverseCake =  cakeOrders.map(cake => CakeOrderMapper.reverseMap(cake))
+    logger.info("List of string book orders: \n %o", reverseCake)
+
+   
 }
 
 main();

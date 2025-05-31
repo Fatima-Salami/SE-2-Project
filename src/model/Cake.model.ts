@@ -1,10 +1,10 @@
-import { Item, ItemCategory } from './Item.model';
+import { IItem, ItemCategory } from './IItem';
 
 type Type = 'Birthday' | 'Wedding' | 'Anniversary' | 'Graduation' | 'Baby Shower' | 'Other';
 
 type packType = 'Box' | 'Luxury Box' | 'Luxury Box with Ribbon' | 'Standard Box' | 'Standard Box with Ribbon';
 
-export class Cake implements Item {
+export class Cake implements IItem {
    
     
     private type: Type;
